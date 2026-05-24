@@ -1,0 +1,1165 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<!-- ============================================================
+     PAGE TITLE — change this to update the browser tab name
+     ============================================================ -->
+<title>OUTFIT® by ++hellohello</title>
+
+<!-- ============================================================
+     FONTS
+     Using "HelveticaNeue" / Arial stack like H&M + Uniqlo.
+     No Google Fonts needed — uses system fonts for speed.
+     ============================================================ -->
+
+<style>
+
+/* ============================================================
+   GLOBAL COLOUR PALETTE
+   Edit these variables to change colours site-wide.
+   --bg         : main page background
+   --text        : main text colour
+   --muted       : grey labels, captions, secondary text
+   --border      : subtle divider lines
+   --accent      : highlight colour (used on buttons, tags, hover underlines)
+   --accent-text : text on top of --accent background
+   ============================================================ */
+:root {
+  --bg:           #ffffff;
+  --text:         #111111;
+  --muted:        #767676;
+  --border:       #e0e0e0;
+  --accent:       #cc0000;   /* <- change this one value to retheme the whole site */
+  --accent-text:  #ffffff;
+}
+
+/* ============================================================
+   GLOBAL RESET & BASE
+   ============================================================ */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+
+body {
+  background: var(--bg);
+  color: var(--text);
+  /* ---- FONT STACK: Helvetica Neue → Arial → system sans ---- */
+  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+  font-size: 14px;
+  line-height: 1.6;
+  overflow-x: hidden;
+}
+
+/* ============================================================
+   NAVIGATION BAR
+   Fixed at top. White background with bottom border.
+   ============================================================ */
+nav {
+  position: fixed;
+  top: 0; left: 0; right: 0;
+  z-index: 100;
+  background: var(--bg);
+  border-bottom: 1px solid var(--border);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 40px;
+  height: 56px;
+}
+
+/* ---- NAV: Logo text (top-left) ---- */
+.nav-logo {
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--text);
+  text-decoration: none;
+}
+
+/* ---- NAV: Centre links ---- */
+.nav-links {
+  display: flex;
+  gap: 36px;
+  list-style: none;
+}
+.nav-links a {
+  color: var(--text);
+  text-decoration: none;
+  font-size: 12px;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  padding-bottom: 2px;
+  border-bottom: 1px solid transparent;
+  transition: border-color 0.2s;
+}
+.nav-links a:hover { border-color: var(--text); }
+
+/* ---- NAV: Bag button (top-right) ---- */
+.nav-cart {
+  font-size: 12px;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--bg);
+  background: var(--text);
+  border: none;
+  padding: 9px 20px;
+  cursor: pointer;
+  text-decoration: none;
+  transition: background 0.2s;
+}
+.nav-cart:hover { background: var(--accent); }
+
+
+/* ============================================================
+   HERO SECTION
+   Full-height split layout: text left, scrolling panel right.
+   ============================================================ */
+.hero {
+  min-height: 100vh;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  margin-top: 56px; /* offset for fixed nav */
+}
+
+/* ---- HERO: Left side text area ---- */
+.hero-left {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  padding: 80px 56px;
+  border-right: 1px solid var(--border);
+}
+
+/* ---- HERO: Small label above main title ---- */
+.hero-eyebrow {
+  font-size: 11px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--muted);
+  margin-bottom: 20px;
+}
+
+/* ---- HERO: Big OUTFIT® headline ---- */
+.hero-title {
+  font-size: clamp(72px, 10vw, 130px);
+  font-weight: 700;
+  line-height: 0.9;
+  text-transform: uppercase;
+  letter-spacing: -0.03em;
+  margin-bottom: 36px;
+  color: var(--text);
+}
+/* The ® "FIT" part coloured in accent red */
+.hero-title .accent { color: var(--accent); }
+
+/* ---- HERO: Description paragraph ---- */
+.hero-desc {
+  max-width: 340px;
+  color: var(--muted);
+  font-size: 13px;
+  line-height: 1.8;
+  margin-bottom: 40px;
+}
+
+/* ---- HERO: "Explore collection" link ---- */
+.hero-cta {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  color: var(--text);
+  text-decoration: none;
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  border-bottom: 2px solid var(--text);
+  padding-bottom: 3px;
+  transition: color 0.2s, border-color 0.2s, gap 0.3s;
+}
+.hero-cta:hover { color: var(--accent); border-color: var(--accent); gap: 18px; }
+
+/* ---- HERO: Right panel (auto-scrolling visual strip) ---- */
+.hero-right {
+  position: relative;
+  background: #f5f5f5;
+  overflow: hidden;
+}
+.hero-image-scroll {
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+  animation: scrollImages 22s linear infinite;
+}
+@keyframes scrollImages {
+  0%   { transform: translateY(0); }
+  100% { transform: translateY(-50%); }
+}
+/* ---- HERO: ©26 stamp bottom-right of right panel ---- */
+.hero-counter {
+  position: absolute;
+  bottom: 32px;
+  right: 32px;
+  font-size: 11px;
+  letter-spacing: 0.12em;
+  color: var(--muted);
+}
+
+
+/* ============================================================
+   TICKER / MARQUEE BANNER
+   Scrolling product name strip between hero and collection.
+   ============================================================ */
+.ticker {
+  background: var(--text);   /* <- change to var(--accent) for a red strip */
+  color: var(--bg);
+  overflow: hidden;
+  padding: 12px 0;
+  white-space: nowrap;
+}
+.ticker-inner {
+  display: inline-flex;
+  animation: ticker 28s linear infinite;
+}
+.ticker-item {
+  display: inline-flex;
+  align-items: center;
+  gap: 20px;
+  padding-right: 56px;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+.ticker-dot {
+  width: 4px; height: 4px;
+  background: var(--muted);
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+@keyframes ticker {
+  0%   { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
+
+
+/* ============================================================
+   SECTION HEADER ROW
+   Used above the collection grid and other sections.
+   ============================================================ */
+.section-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  padding: 56px 40px 28px;
+  border-bottom: 1px solid var(--border);
+}
+/* ---- Big heading e.g. "Collection" ---- */
+.section-title {
+  font-size: clamp(36px, 5vw, 64px);
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: -0.02em;
+  line-height: 1;
+}
+/* ---- Right-side small label e.g. "12 Pieces" ---- */
+.section-count {
+  font-size: 12px;
+  color: var(--muted);
+  letter-spacing: 0.06em;
+}
+
+
+/* ============================================================
+   PRODUCTS GRID
+   3-column grid of product cards.
+   ============================================================ */
+.products {
+  padding: 0 1px 80px; /* 1px keeps the 1px gap flush with viewport edge */
+}
+.products-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1px;
+  background: var(--border); /* gap colour = border line */
+  margin-top: 1px;
+}
+
+/* ---- Each product card ---- */
+.product-card {
+  background: var(--bg);
+  overflow: hidden;
+  cursor: pointer;
+}
+.product-card:hover .product-img    { transform: scale(1.04); }
+.product-card:hover .product-overlay { opacity: 1; }
+
+/* ---- Product image wrapper (maintains 3:4 ratio) ---- */
+.product-img-wrap {
+  aspect-ratio: 3 / 4;
+  overflow: hidden;
+  background: #f3f3f3;
+  position: relative;
+}
+.product-img {
+  width: 100%; height: 100%;
+  object-fit: cover;
+  transition: transform 0.5s ease;
+}
+
+/* ---- Placeholder shown when no real photo is set ---- */
+.product-placeholder {
+  width: 100%; height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #f3f3f3;
+}
+.product-placeholder-text {
+  font-size: clamp(18px, 2.5vw, 28px);
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  text-align: center;
+  padding: 20px;
+  color: rgba(0,0,0,0.12);
+  text-transform: uppercase;
+  line-height: 1.1;
+}
+
+/* ---- "Quick View" hover overlay on each card ---- */
+.product-overlay {
+  position: absolute;
+  inset: 0;
+  background: rgba(0,0,0,0.18);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  transition: opacity 0.3s;
+}
+.product-overlay-btn {
+  background: var(--bg);
+  color: var(--text);
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  padding: 12px 24px;
+  border: none;
+  cursor: pointer;
+  transition: background 0.2s, color 0.2s;
+}
+.product-overlay-btn:hover { background: var(--accent); color: var(--accent-text); }
+
+/* ---- Product name / price text below the image ---- */
+.product-info {
+  padding: 14px 16px 18px;
+  border-top: 1px solid var(--border);
+}
+.product-category {
+  font-size: 10px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--muted);
+  margin-bottom: 4px;
+}
+.product-name {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--text);
+  margin-bottom: 6px;
+  line-height: 1.3;
+}
+.product-price {
+  font-size: 13px;
+  color: var(--text);
+}
+
+
+/* ============================================================
+   FEATURED WIDE CARDS
+   Two landscape cards side by side (Monochrome + Positive Space).
+   ============================================================ */
+.featured-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1px;
+  background: var(--border);
+  margin: 1px 1px;
+}
+.featured-card {
+  position: relative;
+  background: #f3f3f3;
+  overflow: hidden;
+  aspect-ratio: 16 / 9;
+  cursor: pointer;
+}
+.featured-card:hover .product-img { transform: scale(1.04); }
+.featured-card .product-img {
+  width: 100%; height: 100%;
+  object-fit: cover;
+  transition: transform 0.5s ease;
+}
+/* ---- Text overlay at the bottom of each featured card ---- */
+.featured-card-content {
+  position: absolute;
+  bottom: 0; left: 0; right: 0;
+  padding: 20px 24px;
+  background: linear-gradient(transparent, rgba(0,0,0,0.55));
+}
+/* ---- "New" / "Featured" badge ---- */
+.featured-tag {
+  display: inline-block;
+  background: var(--accent);
+  color: var(--accent-text);
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  padding: 3px 9px;
+  margin-bottom: 8px;
+}
+.featured-card-name {
+  font-size: 20px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: -0.01em;
+  color: #fff;
+  line-height: 1;
+  margin-bottom: 4px;
+}
+.featured-card-price {
+  font-size: 12px;
+  color: rgba(255,255,255,0.75);
+}
+
+
+/* ============================================================
+   ABOUT SECTION (two-column: text + stats)
+   ============================================================ */
+.about-strip {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  border: 1px solid var(--border);
+  margin: 64px 40px;
+}
+/* ---- Left: heading + description + link ---- */
+.about-left {
+  padding: 56px 48px;
+  border-right: 1px solid var(--border);
+}
+.about-heading {
+  font-size: clamp(32px, 4.5vw, 56px);
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: -0.02em;
+  line-height: 0.95;
+  margin-bottom: 28px;
+}
+.about-heading .accent { color: var(--accent); }
+.about-body {
+  color: var(--muted);
+  font-size: 13px;
+  line-height: 1.8;
+  max-width: 380px;
+  margin-bottom: 32px;
+}
+.about-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  color: var(--text);
+  text-decoration: none;
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  border-bottom: 2px solid var(--text);
+  padding-bottom: 2px;
+  transition: color 0.2s, border-color 0.2s, gap 0.3s;
+}
+.about-link:hover { color: var(--accent); border-color: var(--accent); gap: 14px; }
+
+/* ---- Right: stats column ---- */
+.about-right {
+  padding: 56px 48px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+.about-stat {
+  border-bottom: 1px solid var(--border);
+  padding: 20px 0;
+}
+.about-stat:first-child { padding-top: 0; }
+.about-stat:last-child  { border-bottom: none; padding-bottom: 0; }
+/* ---- Large stat number ---- */
+.about-stat-num {
+  font-size: 48px;
+  font-weight: 700;
+  letter-spacing: -0.03em;
+  line-height: 1;
+  color: var(--accent);
+  margin-bottom: 4px;
+}
+.about-stat-label {
+  font-size: 11px;
+  color: var(--muted);
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+
+/* ============================================================
+   TAGLINE BLOCK
+   "Made to be worn. Or judged. Or both."
+   ============================================================ */
+.tagline {
+  padding: 72px 40px;
+  border-top: 1px solid var(--border);
+  border-bottom: 1px solid var(--border);
+  margin: 0 40px;
+}
+.tagline-text {
+  font-size: clamp(28px, 4.5vw, 52px);
+  font-weight: 700;
+  line-height: 1.15;
+  letter-spacing: -0.02em;
+  text-transform: uppercase;
+  max-width: 860px;
+}
+/* ---- Greyed-out second line ---- */
+.tagline-text .muted { color: var(--muted); }
+
+
+/* ============================================================
+   FOOTER
+   Four-column top section + bottom copyright row.
+   ============================================================ */
+footer {
+  padding: 56px 40px 40px;
+  border-top: 1px solid var(--border);
+  margin-top: 64px;
+}
+/* ---- Four-column footer grid ---- */
+.footer-top {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr 1fr;
+  gap: 40px;
+  margin-bottom: 56px;
+}
+/* ---- Footer logo text ---- */
+.footer-logo {
+  font-size: 14px;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  margin-bottom: 14px;
+}
+.footer-tagline {
+  font-size: 12px;
+  color: var(--muted);
+  line-height: 1.7;
+}
+/* ---- Column headings (Navigation / Company / Social) ---- */
+.footer-heading {
+  font-size: 10px;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--muted);
+  margin-bottom: 18px;
+}
+/* ---- Footer link lists ---- */
+.footer-links { list-style: none; display: flex; flex-direction: column; gap: 10px; }
+.footer-links a {
+  color: var(--text);
+  text-decoration: none;
+  font-size: 13px;
+  border-bottom: 1px solid transparent;
+  display: inline;
+  transition: border-color 0.2s;
+}
+.footer-links a:hover { border-color: var(--text); }
+/* ---- Bottom bar: copyright left, address right ---- */
+.footer-bottom {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-top: 1px solid var(--border);
+  padding-top: 28px;
+}
+.footer-copy    { font-size: 12px; color: var(--muted); }
+.footer-address { font-size: 12px; color: var(--muted); text-align: right; line-height: 1.6; }
+
+
+/* ============================================================
+   SCROLL REVEAL ANIMATION
+   Elements with class "reveal" fade up when they enter viewport.
+   ============================================================ */
+.reveal {
+  opacity: 0;
+  transform: translateY(24px);
+  transition: opacity 0.6s ease, transform 0.6s ease;
+}
+.reveal.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+
+/* ============================================================
+   RESPONSIVE: MOBILE / TABLET
+   Stacks columns below 860px wide.
+   ============================================================ */
+@media (max-width: 860px) {
+  nav { padding: 0 20px; }
+  .hero { grid-template-columns: 1fr; }
+  .hero-right { display: none; }
+  .hero-left { padding: 56px 24px 64px; }
+  .products-grid { grid-template-columns: repeat(2, 1fr); }
+  .featured-row { grid-template-columns: 1fr; }
+  .about-strip { grid-template-columns: 1fr; margin: 40px 16px; }
+  .about-left { border-right: none; border-bottom: 1px solid var(--border); }
+  .section-header { padding: 40px 20px 20px; }
+  .tagline { margin: 0 16px; padding: 48px 20px; }
+  footer { padding: 40px 20px 32px; }
+  .footer-top { grid-template-columns: 1fr 1fr; }
+}
+
+</style>
+</head>
+<body>
+
+
+<!-- ============================================================
+     NAVIGATION BAR
+     Edit: logo text, menu links, bag button label
+     ============================================================ -->
+<nav>
+
+  <!-- ---- LOGO (top-left) ---- -->
+  <a href="#" class="nav-logo">OUTFIT® <span style="color:var(--muted);font-weight:400">by ++hh</span></a>
+
+  <!-- ---- CENTRE NAV LINKS ---- -->
+  <ul class="nav-links">
+    <li><a href="#collection">Collection</a></li>
+    <li><a href="#about">About</a></li>
+    <li><a href="https://www.hellohello.is" target="_blank">++hellohello</a></li>
+  </ul>
+
+  <!-- ---- BAG BUTTON (top-right) ---- -->
+  <a href="#" class="nav-cart">Bag (0)</a>
+
+</nav>
+
+
+<!-- ============================================================
+     HERO SECTION
+     Edit: eyebrow text, main title, description, CTA link
+     ============================================================ -->
+<section class="hero">
+
+  <!-- ---- LEFT: text content ---- -->
+  <div class="hero-left">
+
+    <!-- Small label above title -->
+    <p class="hero-eyebrow">2026 Collection — Apparel by Designers</p>
+
+    <!-- Main headline. The "FIT" span is coloured red. -->
+    <h1 class="hero-title">OUT<span class="accent">FIT</span><br>®</h1>
+
+    <!-- Short description -->
+    <p class="hero-desc">Created by the ++hellohello team, this store and signature collection celebrates our collective creativity and passion for apparel. Carefully designed.</p>
+
+    <!-- CTA arrow link -->
+    <a href="#collection" class="hero-cta">Explore collection →</a>
+
+  </div>
+
+  <!-- ---- RIGHT: auto-scrolling visual panel ---- -->
+  <div class="hero-right">
+    <!-- These blocks scroll automatically. Replace the divs with <img> tags if you have photos. -->
+    <div class="hero-image-scroll">
+      <div style="aspect-ratio:3/4;background:#ebebeb;display:flex;align-items:center;justify-content:center;">
+        <span style="font-size:56px;font-weight:700;color:rgba(0,0,0,0.06);text-transform:uppercase;letter-spacing:-0.03em;">OUTFIT</span>
+      </div>
+      <div style="aspect-ratio:3/4;background:#f0f0f0;display:flex;align-items:center;justify-content:center;">
+        <span style="font-size:40px;font-weight:700;color:var(--accent);opacity:0.15;text-transform:uppercase;">++HH</span>
+      </div>
+      <div style="aspect-ratio:3/4;background:#e8e8e8;display:flex;align-items:center;justify-content:center;">
+        <span style="font-size:48px;font-weight:700;color:rgba(0,0,0,0.05);text-transform:uppercase;letter-spacing:-0.03em;">DESIGN</span>
+      </div>
+      <div style="aspect-ratio:3/4;background:#f5f5f5;display:flex;align-items:center;justify-content:center;">
+        <span style="font-size:56px;font-weight:700;color:rgba(204,0,0,0.07);text-transform:uppercase;">WEAR</span>
+      </div>
+      <!-- Duplicate blocks below for seamless loop — keep in sync with above -->
+      <div style="aspect-ratio:3/4;background:#ebebeb;display:flex;align-items:center;justify-content:center;">
+        <span style="font-size:56px;font-weight:700;color:rgba(0,0,0,0.06);text-transform:uppercase;letter-spacing:-0.03em;">OUTFIT</span>
+      </div>
+      <div style="aspect-ratio:3/4;background:#f0f0f0;display:flex;align-items:center;justify-content:center;">
+        <span style="font-size:40px;font-weight:700;color:var(--accent);opacity:0.15;text-transform:uppercase;">++HH</span>
+      </div>
+      <div style="aspect-ratio:3/4;background:#e8e8e8;display:flex;align-items:center;justify-content:center;">
+        <span style="font-size:48px;font-weight:700;color:rgba(0,0,0,0.05);text-transform:uppercase;letter-spacing:-0.03em;">DESIGN</span>
+      </div>
+      <div style="aspect-ratio:3/4;background:#f5f5f5;display:flex;align-items:center;justify-content:center;">
+        <span style="font-size:56px;font-weight:700;color:rgba(204,0,0,0.07);text-transform:uppercase;">WEAR</span>
+      </div>
+    </div>
+    <div class="hero-counter">©2026</div>
+  </div>
+
+</section>
+
+
+<!-- ============================================================
+     TICKER / MARQUEE STRIP
+     Edit: the product names inside .ticker-item spans
+     ============================================================ -->
+<div class="ticker">
+  <div class="ticker-inner">
+    <!-- First copy -->
+    <span class="ticker-item">
+      <span class="ticker-dot"></span> Off by Design
+      <span class="ticker-dot"></span> Kerned Confidence
+      <span class="ticker-dot"></span> Neutral Grotesk
+      <span class="ticker-dot"></span> Whitespace Matters
+      <span class="ticker-dot"></span> Positive Space
+      <span class="ticker-dot"></span> Grid System Go
+      <span class="ticker-dot"></span> Command + K
+      <span class="ticker-dot"></span> Hello Week 001
+      <span class="ticker-dot"></span> Monochrome Manifest
+      <span class="ticker-dot"></span>
+    </span>
+    <!-- Second copy (needed for seamless loop — keep identical to first) -->
+    <span class="ticker-item">
+      <span class="ticker-dot"></span> Off by Design
+      <span class="ticker-dot"></span> Kerned Confidence
+      <span class="ticker-dot"></span> Neutral Grotesk
+      <span class="ticker-dot"></span> Whitespace Matters
+      <span class="ticker-dot"></span> Positive Space
+      <span class="ticker-dot"></span> Grid System Go
+      <span class="ticker-dot"></span> Command + K
+      <span class="ticker-dot"></span> Hello Week 001
+      <span class="ticker-dot"></span> Monochrome Manifest
+      <span class="ticker-dot"></span>
+    </span>
+  </div>
+</div>
+
+
+<!-- ============================================================
+     COLLECTION SECTION
+     Edit: section heading, piece count, and all product cards below
+     ============================================================ -->
+<section id="collection">
+
+  <!-- Section header row -->
+  <div class="section-header reveal">
+    <h2 class="section-title">Collection</h2>             <!-- ← heading -->
+    <span class="section-count">12 Pieces — Apparel</span> <!-- ← right-side label -->
+  </div>
+
+  <!-- ---- PRODUCT GRID (first 9 cards) ---- -->
+  <div class="products">
+    <div class="products-grid">
+
+      <!-- ==================== PRODUCT CARD 1 ====================
+           Edit: product-name, product-price, product-category
+           To add a real photo: replace the .product-placeholder div
+           with: <img class="product-img" src="your-image.jpg" alt="...">
+           ========================================================== -->
+      <div class="product-card reveal">
+        <div class="product-img-wrap">
+          <img class="product-img" src="img/isw.png" alt="Off by Design">
+          <div class="product-overlay"><button class="product-overlay-btn">Quick View</button></div>
+        </div>
+        <div class="product-info">
+          <p class="product-category">Apparel</p>
+          <h3 class="product-name">Off by Design</h3>
+          <p class="product-price">$33.00</p>
+        </div>
+      </div>
+
+      <!-- ==================== PRODUCT CARD 2 ==================== -->
+      <div class="product-card reveal" style="transition-delay:0.07s">
+        <div class="product-img-wrap">
+          <div class="product-placeholder" style="background:#eeeeee;">
+            <span class="product-placeholder-text">Kerned<br>Confidence</span>
+          </div>
+          <div class="product-overlay"><button class="product-overlay-btn">Quick View</button></div>
+        </div>
+        <div class="product-info">
+          <p class="product-category">Apparel</p>
+          <h3 class="product-name">Kerned Confidence</h3>
+          <p class="product-price">$25.00</p>
+        </div>
+      </div>
+
+      <!-- ==================== PRODUCT CARD 3 ==================== -->
+      <div class="product-card reveal" style="transition-delay:0.14s">
+        <div class="product-img-wrap">
+          <div class="product-placeholder" style="background:#f7f5f0;">
+            <span class="product-placeholder-text">Neutral<br>Grotesk</span>
+          </div>
+          <div class="product-overlay"><button class="product-overlay-btn">Quick View</button></div>
+        </div>
+        <div class="product-info">
+          <p class="product-category">Apparel</p>
+          <h3 class="product-name">Neutral Grotesk</h3>
+          <p class="product-price">$30.00</p>
+        </div>
+      </div>
+
+      <!-- ==================== PRODUCT CARD 4 ==================== -->
+      <div class="product-card reveal">
+        <div class="product-img-wrap">
+          <div class="product-placeholder" style="background:#ebebeb;">
+            <span class="product-placeholder-text">Specimen<br>No. HH01</span>
+          </div>
+          <div class="product-overlay"><button class="product-overlay-btn">Quick View</button></div>
+        </div>
+        <div class="product-info">
+          <p class="product-category">Apparel</p>
+          <h3 class="product-name">Specimen No. HH01</h3>
+          <p class="product-price">$30.00</p>
+        </div>
+      </div>
+
+      <!-- ==================== PRODUCT CARD 5 ==================== -->
+      <div class="product-card reveal" style="transition-delay:0.07s">
+        <div class="product-img-wrap">
+          <div class="product-placeholder">
+            <span class="product-placeholder-text">Grid<br>System Go</span>
+          </div>
+          <div class="product-overlay"><button class="product-overlay-btn">Quick View</button></div>
+        </div>
+        <div class="product-info">
+          <p class="product-category">Apparel</p>
+          <h3 class="product-name">Grid System Go</h3>
+          <p class="product-price">$30.00</p>
+        </div>
+      </div>
+
+      <!-- ==================== PRODUCT CARD 6 ==================== -->
+      <div class="product-card reveal" style="transition-delay:0.14s">
+        <div class="product-img-wrap">
+          <div class="product-placeholder" style="background:#f2f0ec;">
+            <span class="product-placeholder-text">Red Dot<br>Not Award</span>
+          </div>
+          <div class="product-overlay"><button class="product-overlay-btn">Quick View</button></div>
+        </div>
+        <div class="product-info">
+          <p class="product-category">Apparel</p>
+          <h3 class="product-name">Red Dot Not Award</h3>
+          <p class="product-price">$20.00</p>
+        </div>
+      </div>
+
+      <!-- ==================== PRODUCT CARD 7 ==================== -->
+      <div class="product-card reveal">
+        <div class="product-img-wrap">
+          <div class="product-placeholder" style="background:#ededed;">
+            <span class="product-placeholder-text">Gridlocked</span>
+          </div>
+          <div class="product-overlay"><button class="product-overlay-btn">Quick View</button></div>
+        </div>
+        <div class="product-info">
+          <p class="product-category">Apparel</p>
+          <h3 class="product-name">Gridlocked</h3>
+          <p class="product-price">$25.00</p>
+        </div>
+      </div>
+
+      <!-- ==================== PRODUCT CARD 8 ==================== -->
+      <div class="product-card reveal" style="transition-delay:0.07s">
+        <div class="product-img-wrap">
+          <div class="product-placeholder">
+            <span class="product-placeholder-text">Hello<br>Week 001</span>
+          </div>
+          <div class="product-overlay"><button class="product-overlay-btn">Quick View</button></div>
+        </div>
+        <div class="product-info">
+          <p class="product-category">Apparel</p>
+          <h3 class="product-name">Hello Week 001</h3>
+          <p class="product-price">$30.00</p>
+        </div>
+      </div>
+
+      <!-- ==================== PRODUCT CARD 9 ==================== -->
+      <div class="product-card reveal" style="transition-delay:0.14s">
+        <div class="product-img-wrap">
+          <div class="product-placeholder" style="background:#eeeeee;">
+            <span class="product-placeholder-text">Hello<br>Week 002</span>
+          </div>
+          <div class="product-overlay"><button class="product-overlay-btn">Quick View</button></div>
+        </div>
+        <div class="product-info">
+          <p class="product-category">Apparel</p>
+          <h3 class="product-name">Hello Week 002</h3>
+          <p class="product-price">$30.00</p>
+        </div>
+      </div>
+
+    </div><!-- /products-grid -->
+  </div><!-- /products -->
+
+
+  <!-- ============================================================
+       FEATURED WIDE CARDS
+       Two landscape cards. Edit: tag text, card name, price.
+       ============================================================ -->
+  <div class="featured-row">
+
+    <!-- ==================== FEATURED CARD 1 ==================== -->
+    <div class="featured-card reveal">
+      <!-- Background placeholder — replace with <img class="product-img"> for a real photo -->
+      <div style="width:100%;height:100%;background:#e8e8e8;display:flex;align-items:center;justify-content:center;">
+        <span style="font-size:clamp(48px,9vw,110px);font-weight:700;color:rgba(0,0,0,0.05);text-transform:uppercase;letter-spacing:-0.03em;">MONO</span>
+      </div>
+      <div class="featured-card-content">
+        <div class="featured-tag">New</div>                        <!-- ← badge label -->
+        <h3 class="featured-card-name">Monochrome Manifest</h3>   <!-- ← card title -->
+        <p class="featured-card-price">$30.00 — Apparel</p>        <!-- ← price -->
+      </div>
+    </div>
+
+    <!-- ==================== FEATURED CARD 2 ==================== -->
+    <div class="featured-card reveal" style="transition-delay:0.1s">
+      <div style="width:100%;height:100%;background:#f0ede8;display:flex;align-items:center;justify-content:center;">
+        <span style="font-size:clamp(40px,8vw,96px);font-weight:700;color:rgba(204,0,0,0.07);text-transform:uppercase;letter-spacing:-0.03em;">SPACE</span>
+      </div>
+      <div class="featured-card-content">
+        <div class="featured-tag">Featured</div>
+        <h3 class="featured-card-name">Positive Space</h3>
+        <p class="featured-card-price">$30.00 — Apparel</p>
+      </div>
+    </div>
+
+  </div><!-- /featured-row -->
+
+
+  <!-- ---- Remaining 3 product cards ---- -->
+  <div class="products" style="padding-top:1px;">
+    <div class="products-grid">
+
+      <!-- ==================== PRODUCT CARD 10 ==================== -->
+      <div class="product-card reveal">
+        <div class="product-img-wrap">
+          <div class="product-placeholder" style="background:#ebebeb;">
+            <span class="product-placeholder-text">Whitespace<br>Matters</span>
+          </div>
+          <div class="product-overlay"><button class="product-overlay-btn">Quick View</button></div>
+        </div>
+        <div class="product-info">
+          <p class="product-category">Apparel</p>
+          <h3 class="product-name">Whitespace Matters</h3>
+          <p class="product-price">$33.00</p>
+        </div>
+      </div>
+
+      <!-- ==================== PRODUCT CARD 11 ==================== -->
+      <div class="product-card reveal" style="transition-delay:0.07s">
+        <div class="product-img-wrap">
+          <div class="product-placeholder" style="background:#f3f3f3;">
+            <span class="product-placeholder-text">Command<br>+ K</span>
+          </div>
+          <div class="product-overlay"><button class="product-overlay-btn">Quick View</button></div>
+        </div>
+        <div class="product-info">
+          <p class="product-category">Apparel</p>
+          <h3 class="product-name">Command + K</h3>
+          <p class="product-price">$15.00</p>
+        </div>
+      </div>
+
+      <!-- ==================== PRODUCT CARD 12 (placeholder / "more soon") ==================== -->
+      <div class="product-card reveal" style="transition-delay:0.14s">
+        <div class="product-img-wrap">
+          <div class="product-placeholder">
+            <span style="font-size:72px;font-weight:700;color:rgba(0,0,0,0.08);">++</span>
+          </div>
+          <div class="product-overlay"><button class="product-overlay-btn">View All</button></div>
+        </div>
+        <div class="product-info">
+          <p class="product-category">More Coming Soon</p>
+          <h3 class="product-name">++hellohello</h3>
+          <p class="product-price">2026</p>
+        </div>
+      </div>
+
+    </div><!-- /products-grid -->
+  </div><!-- /products -->
+
+</section><!-- /collection -->
+
+
+<!-- ============================================================
+     TAGLINE BLOCK
+     Edit: the two lines of text below.
+     ============================================================ -->
+<div class="tagline reveal">
+  <p class="tagline-text">
+    Made to be worn.<br>
+    <span class="muted">Or judged. Or both.</span>  <!-- ← greyed second line -->
+  </p>
+</div>
+
+
+<!-- ============================================================
+     ABOUT SECTION
+     Edit: heading, body text, link href + label, stat numbers + labels
+     ============================================================ -->
+<section id="about">
+  <div class="about-strip reveal">
+
+    <!-- ---- Left: story text ---- -->
+    <div class="about-left">
+      <h2 class="about-heading">Why<br>We <span class="accent">Make</span><br>Things.</h2>  <!-- ← heading -->
+      <p class="about-body">Created by the ++hellohello team, this store and signature collection celebrates our collective creativity and passion for apparel. Carefully designed by designers who live and breathe craft.</p>  <!-- ← paragraph -->
+      <a href="https://www.hellohello.is" target="_blank" class="about-link">Visit ++hellohello →</a>  <!-- ← link -->
+    </div>
+
+    <!-- ---- Right: three stats ---- -->
+    <div class="about-right">
+
+      <!-- ---- STAT 1 ---- -->
+      <div class="about-stat">
+        <p class="about-stat-num">12+</p>          <!-- ← big number -->
+        <p class="about-stat-label">Unique Pieces</p> <!-- ← label -->
+      </div>
+
+      <!-- ---- STAT 2 ---- -->
+      <div class="about-stat">
+        <p class="about-stat-num">100%</p>
+        <p class="about-stat-label">Designed in-house</p>
+      </div>
+
+      <!-- ---- STAT 3 ---- -->
+      <div class="about-stat">
+        <p class="about-stat-num">©26</p>
+        <p class="about-stat-label">Current Season</p>
+      </div>
+
+    </div>
+
+  </div>
+</section>
+
+
+<!-- ============================================================
+     FOOTER
+     Edit: logo, tagline text, all link labels + hrefs, address
+     ============================================================ -->
+<footer>
+  <div class="footer-top">
+
+    <!-- ---- Column 1: Brand blurb ---- -->
+    <div>
+      <p class="footer-logo">OUTFIT®</p>  <!-- ← footer logo -->
+      <p class="footer-tagline">A signature collection by the ++hellohello team. Celebrating creativity and craft in apparel.</p>  <!-- ← footer description -->
+    </div>
+
+    <!-- ---- Column 2: Navigation links ---- -->
+    <div>
+      <p class="footer-heading">Navigation</p>
+      <ul class="footer-links">
+        <li><a href="#">Collection</a></li>
+        <li><a href="#">Shipping &amp; Returns</a></li>
+        <li><a href="https://www.hellohello.is/privacy-policy" target="_blank">Privacy Policy</a></li>
+      </ul>
+    </div>
+
+    <!-- ---- Column 3: Company links ---- -->
+    <div>
+      <p class="footer-heading">Company</p>
+      <ul class="footer-links">
+        <li><a href="https://www.hellohello.is/work"     target="_blank">Work</a></li>
+        <li><a href="https://www.hellohello.is/services" target="_blank">Services</a></li>
+        <li><a href="https://www.hellohello.is/about"    target="_blank">About</a></li>
+        <li><a href="https://www.hellohello.is/careers"  target="_blank">Careers</a></li>
+        <li><a href="https://www.hellohello.is/contact"  target="_blank">Let's talk</a></li>
+      </ul>
+    </div>
+
+    <!-- ---- Column 4: Social links ---- -->
+    <div>
+      <p class="footer-heading">Social</p>
+      <ul class="footer-links">
+        <li><a href="https://dribbble.com/hellohelloteam"           target="_blank">Dribbble</a></li>
+        <li><a href="https://www.instagram.com/hellohelloteam"      target="_blank">Instagram</a></li>
+        <li><a href="https://www.linkedin.com/company/hellohello"   target="_blank">LinkedIn</a></li>
+        <li><a href="https://twitter.com/hellohelloteam"            target="_blank">Twitter (X)</a></li>
+      </ul>
+    </div>
+
+  </div>
+
+  <!-- ============================================================
+       PAYMENT SECTION
+       Edit: "View all payment options" href below
+       Add/remove payment icons as needed
+       ============================================================ -->
+  <div style="border-top:1px solid var(--border); padding-top:32px; margin-top:32px;">
+    <p style="font-size:13px; font-weight:700; margin-bottom:20px;">Payments</p>
+    <div style="display:flex; align-items:center; gap:16px; flex-wrap:wrap;">
+
+      <!-- ---- Apple Pay icon ---- -->
+      <div style="border:1px solid #ccc; border-radius:5px; padding:5px 12px; font-size:12px; font-weight:600; font-family:sans-serif; display:flex; align-items:center; gap:4px;">
+        <svg width="14" height="14" viewBox="0 0 814 1000"><path d="M788.1 340.9c-5.8 4.5-108.2 62.2-108.2 190.5 0 148.4 130.3 200.9 134.2 202.2-.6 3.2-20.7 71.9-68.7 141.9-42.8 61.6-87.5 123.1-155.5 123.1s-85.5-39.5-164-39.5c-76 0-103.7 40.8-165.9 40.8s-105-57.8-155.5-127.4C46 790.7 0 663 0 541.8c0-207.5 135.4-317.3 269-317.3 70.1 0 128.4 46.4 172.5 46.4 42.8 0 109.9-49 192.5-49 30.9 0 108.2 2.6 168.7 76.3zm-234.5-172.5c31.6-37.6 54.4-89.6 54.4-141.6 0-7.1-.6-14.3-1.9-20.1-51.9 2-113.2 34.6-149.5 75.6-28.3 32.3-55.2 84.2-55.2 136.9 0 7.8 1.3 15.6 1.9 18.1 3.2.6 8.4 1.3 13.6 1.3 46.4 0 102.8-31.0 136.7-70.2z"/></svg>
+        Pay
+      </div>
+
+      <!-- ---- Cash on Delivery ---- -->
+      <div style="border:1px solid #ccc; border-radius:3px; padding:6px 10px; font-size:10px; font-weight:700; letter-spacing:0.05em; text-align:center; line-height:1.3;">
+        CASH ON<br>DELIVERY
+      </div>
+
+      <!-- ---- Visa ---- -->
+      <div style="font-size:22px; font-weight:900; font-family:'Helvetica Neue',Helvetica,Arial,sans-serif; color:#1a1f71; letter-spacing:-0.02em;">
+        VISA
+      </div>
+
+      <!-- ---- Mastercard (two overlapping circles) ---- -->
+      <div style="display:flex; align-items:center;">
+        <div style="width:28px; height:28px; background:#eb001b; border-radius:50%;"></div>
+        <div style="width:28px; height:28px; background:#f79e1b; border-radius:50%; margin-left:-12px; opacity:0.95;"></div>
+      </div>
+
+      <!-- ---- "View all payment options" link ---- -->
+      <a href="#" style="font-size:13px; color:var(--text); text-decoration:underline; margin-left:4px;">
+        View all payment options
+      </a>
+
+    </div>
+  </div>
+
+  <!-- ---- Bottom bar ---- -->
+  <div class="footer-bottom">
+    <p class="footer-copy">++hellohello — All rights reserved © 2026</p>  <!-- ← copyright text -->
+    <p class="footer-address">Libertad 2529, Office 102<br>Montevideo, Uruguay</p>  <!-- ← address -->
+  </div>
+
+</footer>
+
+
+<!-- ============================================================
+     SCROLL REVEAL SCRIPT
+     No need to edit — automatically animates .reveal elements.
+     ============================================================ -->
+<script>
+  const reveals = document.querySelectorAll('.reveal');
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) entry.target.classList.add('visible');
+    });
+  }, { threshold: 0.08, rootMargin: '0px 0px -32px 0px' });
+  reveals.forEach(el => observer.observe(el));
+</script>
+
+</body>
+</html>
